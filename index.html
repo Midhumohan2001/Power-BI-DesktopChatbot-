@@ -1,36 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Power BI Chatbot</title>
+    <title>Power BI AI Chatbot</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            padding: 20px;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
         }
 
-        .chatbox {
+        .chat-container {
             width: 100%;
             max-width: 500px;
-            height: 500px;
+            height: 560px;
+            margin: auto;
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px #ccc;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        h2 {
-            color: #333;
+        .chat-header {
+            background: #1f4e79;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+
+        .message {
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 85%;
+        }
+
+        .bot {
+            background: #e8f0fe;
+            color: #222;
+        }
+
+        .user {
+            background: #d1ffd6;
+            color: #222;
+            margin-left: auto;
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            padding: 12px 18px;
+            border: none;
+            background: #1f4e79;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .chat-input button:hover {
+            background: #163a5c;
         }
     </style>
 </head>
+
 <body>
 
-    <div class="chatbox">
-        <h2>AI Agent Chatbot</h2>
-        <p>Hello! Your chatbot page is working.</p>
+    <div class="chat-container">
+        <div class="chat-header">
+            Power BI AI Assistant
+        </div>
+
+        <div class="chat-box" id="chatBox">
+            <div class="message bot">
+                Hello! I am your Power BI assistant. Ask me about sales, revenue, or dashboard insights.
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Ask something..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
     </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const chatBox = document.getElementById("chatBox");
+            const userText = input.value.trim();
+
+            if (userText === "") {
+                return;
+            }
+
+            const userMessage = document.createElement("div");
+            userMessage.className = "message user";
+            userMessage.innerText = userText;
+            chatBox.appendChild(userMessage);
+
+            input.value = "";
+
+            const botMessage = document.createElement("div");
+            botMessage.className = "message bot";
+
+            if (userText.toLowerCase().includes("sales")) {
+                botMessage.innerText = "Sales-related question received. In the next step, we can connect this to your Power BI data.";
+            } else if (userText.toLowerCase().includes("revenue")) {
+                botMessage.innerText = "Revenue-related question received. Later we can fetch actual revenue from your dataset.";
+            } else {
+                botMessage.innerText = "I received your question. Currently this is a demo chatbot. Next we need to connect it with AI or Power BI data.";
+            }
+
+            chatBox.appendChild(botMessage);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
 
 </body>
 </html>
-
